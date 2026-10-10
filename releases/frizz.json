@@ -1,0 +1,43 @@
+{
+  "versions": [
+    {
+      "tag": "v0.11",
+      "version": "0.11",
+      "prerelease": false,
+      "published": "2026-10-10T10:31:51Z",
+      "url": "https://github.com/ZUHcYa/FrizZ/releases/tag/v0.11",
+      "asset": "FRIZZ.bin",
+      "asset_id": 627675707,
+      "asset_updated": "2026-10-10T10:31:51Z",
+      "download": "https://github.com/ZUHcYa/FrizZ/releases/download/v0.11/FRIZZ.bin",
+      "size": 214124,
+      "sha256": "e061a65a632be45dbe226ac1c042cc7d0b1e78be9b85f1da01312152d3c8feda"
+    },
+    {
+      "tag": "v0.10",
+      "version": "0.10",
+      "prerelease": false,
+      "published": "2026-10-08T12:06:39Z",
+      "url": "https://github.com/ZUHcYa/FrizZ/releases/tag/v0.10",
+      "asset": "FRIZZ.bin",
+      "asset_id": 621724068,
+      "asset_updated": "2026-10-08T12:06:39Z",
+      "download": "https://github.com/ZUHcYa/FrizZ/releases/download/v0.10/FRIZZ.bin",
+      "size": 195252,
+      "sha256": "94794ec5f1de3ccd5c4cee60428cfd56018ef2ccfd2eed513e74dd41cf79a8ff"
+    },
+    {
+      "tag": "v0.9",
+      "version": "0.9",
+      "prerelease": false,
+      "published": "2026-10-06T20:11:23Z",
+      "url": "https://github.com/ZUHcYa/FrizZ/releases/tag/v0.9",
+      "asset": "FRIZZ.bin",
+      "asset_id": 616527786,
+      "asset_updated": "2026-10-06T20:05:02Z",
+      "download": "https://github.com/ZUHcYa/FrizZ/releases/download/v0.9/FRIZZ.bin",
+      "size": 205300,
+      "sha256": "bd8ffca97db5b3431a94ae68f78814fcb1e97b8f5078d26915d882f7461a6397"
+    }
+  ]
+}
