@@ -1,0 +1,15 @@
+{
+  "title": "POLY",
+  "card": "POLY",
+  "author": "hiwatts",
+  "maintainers": [
+    "sfaber02"
+  ],
+  "folder": "POLY",
+  "summary": "A four-oscillator analog-style synth inspired by the Korg Mono/Poly: mono or 6-voice poly, with filter, envelopes, LFO, arpeggiator, chorus, delay and reverb.",
+  "source": {
+    "repo": "sfaber02/chompi-poly",
+    "asset": "^chompi-poly-.*\\.zip$",
+    "zip": "(^|/)POLY\\.bin$"
+  }
+}
