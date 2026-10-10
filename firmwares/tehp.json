@@ -1,0 +1,15 @@
+{
+  "title": "TEHP",
+  "card": "TEHP",
+  "author": "ugrossek",
+  "maintainers": [
+    "ugrossek"
+  ],
+  "folder": "TAPE",
+  "summary": "TAPE where changing the pitch keeps the timing, on the keys and in the looper.",
+  "source": {
+    "repo": "ugrossek/CHOMPI",
+    "tag": "^tehp-(?P<v>.+)$",
+    "asset": "^TEHP\\.bin$"
+  }
+}

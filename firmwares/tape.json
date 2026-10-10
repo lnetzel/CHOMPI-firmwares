@@ -1,0 +1,17 @@
+{
+  "title": "TAPE",
+  "card": "TAPE",
+  "author": "CHOMPI Club",
+  "authorUrl": "https://github.com/CHOMPI-Club/CHOMPI",
+  "stock": true,
+  "slot": 1,
+  "folder": "TAPE",
+  "version": "2.0",
+  "summary": "The sampler and looper CHOMPI ships with.",
+  "source": {
+    "repo": "sfaber02/CHOMPI-MULTI-FIRMWARE",
+    "tag": "^launcher-v1\\.3$",
+    "asset": "^chompi-multi-firmware-card\\.zip$",
+    "zip": "/FIRMWARE/01_TAPE\\.bin$"
+  }
+}

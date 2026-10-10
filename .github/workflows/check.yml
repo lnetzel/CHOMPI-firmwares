@@ -1,0 +1,28 @@
+# Pull requests that add or change a firmware entry: check it and show what
+# would be published. The result is in the run's summary.
+name: check
+
+on:
+  pull_request:
+    paths: ["firmwares/**", "tools/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check the entries
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          changed=$(git diff --name-only "$BASE" HEAD -- firmwares | sed -n 's|^firmwares/\(.*\)\.json$|\1|p')
+          python3 tools/firmwares.py check --author "$AUTHOR" --report report.md ${changed:+--changed $changed}
+      - if: always()
+        run: cat report.md >> "$GITHUB_STEP_SUMMARY" || true

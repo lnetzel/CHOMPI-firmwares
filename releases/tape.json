@@ -1,0 +1,17 @@
+{
+  "versions": [
+    {
+      "tag": "launcher-v1.3",
+      "version": "2.0",
+      "prerelease": false,
+      "published": "2026-10-04T21:08:32Z",
+      "url": "https://github.com/sfaber02/CHOMPI-MULTI-FIRMWARE/releases/tag/launcher-v1.3",
+      "asset": "chompi-multi-firmware-card.zip",
+      "asset_id": 610677547,
+      "asset_updated": "2026-10-04T21:08:31Z",
+      "download": "https://github.com/sfaber02/CHOMPI-MULTI-FIRMWARE/releases/download/launcher-v1.3/chompi-multi-firmware-card.zip",
+      "size": 240620,
+      "sha256": "971eec1a228596fdc64d0dc7910f9f0f14bc0eaac7442dccafa195e8b29c3bb6"
+    }
+  ]
+}

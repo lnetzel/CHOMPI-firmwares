@@ -1,0 +1,17 @@
+{
+  "versions": [
+    {
+      "tag": "tehp-alpha",
+      "version": "alpha",
+      "prerelease": true,
+      "published": "2026-10-08T13:59:09Z",
+      "url": "https://github.com/ugrossek/CHOMPI/releases/tag/tehp-alpha",
+      "asset": "TEHP.bin",
+      "asset_id": 621991622,
+      "asset_updated": "2026-10-08T13:59:08Z",
+      "download": "https://github.com/ugrossek/CHOMPI/releases/download/tehp-alpha/TEHP.bin",
+      "size": 238180,
+      "sha256": "2b4e363b9e6eddc099ac29453b475a4c286e49911c088018e5c12464ddfdd3a8"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+# Every hour: look for new releases of the listed firmwares, record them and
+# publish the site. Also runs when an entry is merged, and by hand.
+name: publish
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+  push:
+    branches: [main]
+    paths: ["firmwares/**", "launcher/**", "site/**", "tools/**", ".github/workflows/publish.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  issues: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/cache@v4
+        with:
+          path: .cache
+          key: bins-${{ github.run_id }}
+          restore-keys: bins-
+
+      - name: Look for new releases
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 tools/firmwares.py poll --report report.md
+
+      - name: Record them
+        id: record
+        run: |
+          if [ -n "$(git status --porcelain releases)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add releases
+            git commit -q -m "New releases" -m "$(cat report.md)"
+            git pull -q --rebase && git push -q
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+          cat report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Build the site
+        if: steps.record.outputs.changed == 'true' || github.event_name != 'schedule'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 tools/firmwares.py build --out _site
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.record.outputs.changed == 'true' || github.event_name != 'schedule'
+        with:
+          path: _site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
+        if: steps.record.outputs.changed == 'true' || github.event_name != 'schedule'
+
+      # One running log for the maintainer: a comment per batch of releases
+      # on the issue labelled release-log.
+      - name: Tell the maintainer
+        if: steps.record.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          n=$(gh issue list --label release-log --state open --json number --jq '.[0].number')
+          if [ -z "$n" ]; then
+            gh label create release-log --color BFD4F2 --description "New firmware releases, posted by the publish workflow" 2>/dev/null || true
+            n=$(gh issue create --title "Release log" --label release-log \
+                  --body "New releases the publish workflow put on the setup page. Unsubscribe to stop the notifications." | grep -o '[0-9]*$')
+          fi
+          gh issue comment "$n" --body-file report.md

@@ -1,0 +1,16 @@
+{
+  "title": "USB storage",
+  "card": "USB_STORAGE",
+  "author": "lnetzel",
+  "authorUrl": "https://github.com/lnetzel",
+  "stock": true,
+  "slot": 15,
+  "version": "1.5",
+  "summary": "Shows the SD card as a drive on your computer, so you can copy samples without taking the card out.",
+  "source": {
+    "repo": "sfaber02/CHOMPI-MULTI-FIRMWARE",
+    "tag": "^launcher-v1\\.3$",
+    "asset": "^chompi-multi-firmware-card\\.zip$",
+    "zip": "/FIRMWARE/15_USB_STORAGE\\.bin$"
+  }
+}

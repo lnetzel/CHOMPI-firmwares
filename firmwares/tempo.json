@@ -1,0 +1,17 @@
+{
+  "title": "TEMPO",
+  "card": "TEMPO",
+  "author": "CHOMPI Club",
+  "authorUrl": "https://github.com/CHOMPI-Club/CHOMPI",
+  "stock": true,
+  "slot": 2,
+  "folder": "TEMPO",
+  "version": "1.0",
+  "summary": "Drum machine and sequencer.",
+  "source": {
+    "repo": "sfaber02/CHOMPI-MULTI-FIRMWARE",
+    "tag": "^launcher-v1\\.3$",
+    "asset": "^chompi-multi-firmware-card\\.zip$",
+    "zip": "/FIRMWARE/02_TEMPO\\.bin$"
+  }
+}
