@@ -1,0 +1,17 @@
+{
+  "versions": [
+    {
+      "tag": "beta",
+      "version": "beta",
+      "prerelease": false,
+      "published": "2026-10-04T01:17:52Z",
+      "url": "https://github.com/sfaber02/chompi-hmmm/releases/tag/beta",
+      "asset": "HMMM.bin",
+      "asset_id": 609153751,
+      "asset_updated": "2026-10-04T04:53:55Z",
+      "download": "https://github.com/sfaber02/chompi-hmmm/releases/download/beta/HMMM.bin",
+      "size": 150600,
+      "sha256": "578c0b9f30ad17936cf564ebb48c8c99c1cd9ca73f5dc79f2683eb323ed7aa61"
+    }
+  ]
+}
