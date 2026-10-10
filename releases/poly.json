@@ -1,0 +1,17 @@
+{
+  "versions": [
+    {
+      "tag": "beta",
+      "version": "beta",
+      "prerelease": true,
+      "published": "2026-10-03T19:24:09Z",
+      "url": "https://github.com/sfaber02/chompi-poly/releases/tag/beta",
+      "asset": "chompi-poly-beta.zip",
+      "asset_id": 608528166,
+      "asset_updated": "2026-10-03T20:59:37Z",
+      "download": "https://github.com/sfaber02/chompi-poly/releases/download/beta/chompi-poly-beta.zip",
+      "size": 182772,
+      "sha256": "5caa8c0c2ace0c15b65079104f9482f9192a1bded1b5967d0fdec523c053169e"
+    }
+  ]
+}
