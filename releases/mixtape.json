@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "tag": "mixtape-20261011-b1bbdea",
+      "version": "20261011-b1bbdea",
+      "prerelease": false,
+      "published": "2026-10-11T22:03:41Z",
+      "url": "https://github.com/lost-tty/CHOMPI/releases/tag/mixtape-20261011-b1bbdea",
+      "asset": "CHOMPI_MIXTAPE_b1bbdea.bin",
+      "asset_id": 631923121,
+      "asset_updated": "2026-10-11T22:03:40Z",
+      "download": "https://github.com/lost-tty/CHOMPI/releases/download/mixtape-20261011-b1bbdea/CHOMPI_MIXTAPE_b1bbdea.bin",
+      "size": 238892,
+      "sha256": "431d064d06c563dddbf2509640fa597fd5182c858138ed5e8e3b03c39e614075"
+    },
+    {
       "tag": "mixtape-20261011-908bafd",
       "version": "20261011-908bafd",
       "prerelease": false,
