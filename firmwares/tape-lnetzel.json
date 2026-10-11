@@ -1,0 +1,15 @@
+{
+  "title": "TAPE (lnetzel)",
+  "card": "TAPE_LNETZEL",
+  "author": "lnetzel",
+  "authorUrl": "https://github.com/lnetzel",
+  "summary": "TAPE with additions like undo last overdub, precise preset trimming, looper playback volume, paste-append and sample rate reducer fx.",
+  "folder": "TAPE",
+  "maintainers": ["lnetzel"],
+  "prefer": "newest",
+  "source": {
+    "repo": "lnetzel/CHOMPI-lnetzel",
+    "tag": "^TAPE-lnetzel(-[\\d.]+)?$",
+    "asset": "^TAPE-lnetzel-(?P<v>[\\d.]+)\\.bin$"
+  }
+}
