@@ -1,0 +1,13 @@
+{
+  "title": "x0x",
+  "card": "X0X",
+  "author": "Jero",
+  "summary": "A TB-303-style acid bass line machine with a TR-606-style drum machine alongside, each with its own 16-step sequencer to program by step or record live.",
+  "folder": "X0X",
+  "maintainers": ["theotherson"],
+  "source": {
+    "repo": "theotherson/chompi-x0x",
+    "tag": "^v(?P<v>\\d.*)$",
+    "asset": "^chompi-x0x-.*\\.bin$"
+  }
+}
