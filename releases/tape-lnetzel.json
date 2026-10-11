@@ -1,0 +1,43 @@
+{
+  "versions": [
+    {
+      "tag": "TAPE-lnetzel-1.2",
+      "version": "1.2",
+      "prerelease": true,
+      "published": "2026-10-09T20:42:30Z",
+      "url": "https://github.com/lnetzel/CHOMPI-lnetzel/releases/tag/TAPE-lnetzel-1.2",
+      "asset": "TAPE-lnetzel-1.2.bin",
+      "asset_id": 626127509,
+      "asset_updated": "2026-10-09T20:43:05Z",
+      "download": "https://github.com/lnetzel/CHOMPI-lnetzel/releases/download/TAPE-lnetzel-1.2/TAPE-lnetzel-1.2.bin",
+      "size": 241560,
+      "sha256": "e02a7bc042bc32a51c7e57f3c5f221c39deb7d6352a1876407322f678e87763f"
+    },
+    {
+      "tag": "TAPE-lnetzel-1.1",
+      "version": "1.1",
+      "prerelease": false,
+      "published": "2026-10-09T11:44:11Z",
+      "url": "https://github.com/lnetzel/CHOMPI-lnetzel/releases/tag/TAPE-lnetzel-1.1",
+      "asset": "TAPE-lnetzel-1.1.bin",
+      "asset_id": 624809651,
+      "asset_updated": "2026-10-09T11:43:11Z",
+      "download": "https://github.com/lnetzel/CHOMPI-lnetzel/releases/download/TAPE-lnetzel-1.1/TAPE-lnetzel-1.1.bin",
+      "size": 240736,
+      "sha256": "eb85e52ee1e7dd18b3cbd29891e830bcbd09bea8f52b5549cd8d11f042e6f8d1"
+    },
+    {
+      "tag": "TAPE-lnetzel",
+      "version": "1.0",
+      "prerelease": false,
+      "published": "2026-10-06T21:38:22Z",
+      "url": "https://github.com/lnetzel/CHOMPI-lnetzel/releases/tag/TAPE-lnetzel",
+      "asset": "TAPE-lnetzel-1.0.bin",
+      "asset_id": 624469109,
+      "asset_updated": "2026-10-09T09:14:44Z",
+      "download": "https://github.com/lnetzel/CHOMPI-lnetzel/releases/download/TAPE-lnetzel/TAPE-lnetzel-1.0.bin",
+      "size": 238248,
+      "sha256": "5e45593605c30c1385f147f90b4c7a3f353756f9e7db85b8f6d827d33ac8af69"
+    }
+  ]
+}
