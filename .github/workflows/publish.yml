@@ -1,10 +1,11 @@
-# Every hour: look for new releases of the listed firmwares, record them and
-# publish the site. Also runs when an entry is merged, and by hand.
+# Every 15 minutes (GitHub skips many scheduled runs, so ask often): look for
+# new releases of the listed firmwares, record them and publish the site.
+# Also runs when an entry is merged, and by hand.
 name: publish
 
 on:
   schedule:
-    - cron: "23 * * * *"
+    - cron: "7,22,37,52 * * * *"
   push:
     branches: [main]
     paths: ["firmwares/**", "launcher/**", "site/**", "tools/**", ".github/workflows/publish.yml"]

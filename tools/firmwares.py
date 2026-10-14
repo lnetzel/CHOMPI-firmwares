@@ -34,7 +34,7 @@ CACHE = ROOT / ".cache"  # extracted firmware files by sha256, kept between runs
 
 MAX_IMAGE = 0x80000  # the launcher's buffer, chainload.h
 APP_START = 0x24000000
-KEEP = 4  # releases and pre-releases remembered each, so older ones on a card are recognised
+KEEP = 4  # releases and pre-releases each that a pull request check tries
 CARD_RE = re.compile(r"^[A-Z0-9_-]{1,16}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,31}$")
 REQUIRED = ("title", "card", "author", "summary", "source")
@@ -226,14 +226,20 @@ def save_releases(eid, versions):
 
 
 def poll_entry(eid, e, rels, write=True):
-    """Bring releases/<id>.json up to date. Returns report lines."""
+    """Bring releases/<id>.json up to date. Returns report lines.
+
+    Every version ever recorded stays in the file, so the page recognises it
+    on a card and offers the update. One that left GitHub (deleted, skipped,
+    or past the newest 50 releases) is kept with `gone`; it is never offered
+    for download again."""
     report = []
     old = {v["tag"]: v for v in load_releases(eid)}
     new = []
-    for r, a in kept(e, rels):
+    for r, a in candidates(e, rels):
         known = old.get(r["tag_name"])
         if known and known.get("asset_id") == a["id"] and known.get("asset_updated") == a["updated_at"]:
-            known["prerelease"] = r["prerelease"]  # may be flipped later on GitHub
+            known = dict(known, prerelease=r["prerelease"])  # may be flipped later on GitHub
+            known.pop("gone", None)
             new.append(known)
             continue
         rec = {
@@ -262,11 +268,16 @@ def poll_entry(eid, e, rels, write=True):
             pre = " (pre-release)" if r["prerelease"] else ""
             report.append(f"- {e['title']} {rec['version']}{pre}: {what}, {len(data) // 1024} KB. [release]({rec['url']})")
         new.append(rec)
-    still = {r["tag_name"] for r, _ in kept(e, rels)}
+    seen = {v["tag"] for v in new}
     for t, v in old.items():
-        if t not in still:
-            if not any(r["tag_name"] == t for r, _ in candidates(e, rels)):
-                report.append(f"- {e['title']} {v['version']}: release gone from GitHub (or skipped), dropped")
+        if t in seen:
+            continue
+        if not v.get("gone"):
+            v = dict(v, gone=True)
+            report.append(f"- {e['title']} {v['version']}: no longer on GitHub (or skipped); "
+                          "not offered any more, still recognised on cards")
+        new.append(v)
+    new.sort(key=lambda v: v["published"], reverse=True)
     if write and new != list(old.values()):
         save_releases(eid, new)
     return report
@@ -376,7 +387,8 @@ def cmd_build(args):
         if entry_problems(eid, e, entries):
             problems.append(f"{eid}: invalid entry, left out")
             continue
-        recs = [r for r in load_releases(eid) if "sha256" in r]
+        known = [r for r in load_releases(eid) if "sha256" in r]
+        recs = [r for r in known if not r.get("gone")]
         if not recs:
             problems.append(f"{eid}: no usable release yet, left out")
             continue
@@ -420,7 +432,7 @@ def cmd_build(args):
             if k in e:
                 f[k] = e[k]
         prev = [{"version": r["version"], "size": r["size"], "sha256": r["sha256"]}
-                for r in recs if r["published"] < cur["published"] and r["sha256"] != cur["sha256"]]
+                for r in known if r["published"] < cur["published"] and r["sha256"] != cur["sha256"]]
         if prev:
             f["previous"] = prev
         firmwares.append(f)
