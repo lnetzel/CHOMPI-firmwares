@@ -1,0 +1,43 @@
+{
+  "versions": [
+    {
+      "tag": "choowi-0.20.0-rc3",
+      "version": "0.20.0-rc3",
+      "prerelease": false,
+      "published": "2026-10-13T14:55:28Z",
+      "url": "https://github.com/myth-world/Forge/releases/tag/choowi-0.20.0-rc3",
+      "asset": "FORGE.bin",
+      "asset_id": 637354160,
+      "asset_updated": "2026-10-13T14:55:27Z",
+      "download": "https://github.com/myth-world/Forge/releases/download/choowi-0.20.0-rc3/FORGE.bin",
+      "size": 256960,
+      "sha256": "59926f55a2a4f3d6de14bf6f9f9838cea3f0a9d7e4a3bb6b29e0e170161d1121"
+    },
+    {
+      "tag": "choowi-0.19.2-rc2",
+      "version": "0.19.2-rc2",
+      "prerelease": false,
+      "published": "2026-10-12T08:31:48Z",
+      "url": "https://github.com/myth-world/Forge/releases/tag/choowi-0.19.2-rc2",
+      "asset": "FORGE.bin",
+      "asset_id": 633166176,
+      "asset_updated": "2026-10-12T08:31:27Z",
+      "download": "https://github.com/myth-world/Forge/releases/download/choowi-0.19.2-rc2/FORGE.bin",
+      "size": 253264,
+      "sha256": "b96c2413c9858b788b85c253a76f3ba1464add6013128ea3dfc74ddb4d38f62d"
+    },
+    {
+      "tag": "choowi-0.19.2-rc1",
+      "version": "0.19.2-rc1",
+      "prerelease": true,
+      "published": "2026-10-11T18:54:43Z",
+      "url": "https://github.com/myth-world/Forge/releases/tag/choowi-0.19.2-rc1",
+      "asset": "FORGE.bin",
+      "asset_id": 631536762,
+      "asset_updated": "2026-10-11T18:54:27Z",
+      "download": "https://github.com/myth-world/Forge/releases/download/choowi-0.19.2-rc1/FORGE.bin",
+      "size": 256040,
+      "sha256": "2920c5803dcd73724de0be12661622f0662543b03308227317a0a45e5094a150"
+    }
+  ]
+}
