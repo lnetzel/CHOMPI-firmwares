@@ -8,6 +8,7 @@
   "folder": "TAPE",
   "version": "2.0",
   "summary": "The sampler and looper CHOMPI ships with.",
+  "color": "#FF8A00",
   "source": {
     "repo": "sfaber02/CHOMPI-MULTI-FIRMWARE",
     "tag": "^launcher-v1\\.3$",

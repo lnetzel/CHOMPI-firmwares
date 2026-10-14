@@ -7,6 +7,7 @@
   ],
   "folder": "POLY",
   "summary": "A four-oscillator analog-style synth inspired by the Korg Mono/Poly: mono or 6-voice poly, with filter, envelopes, LFO, arpeggiator, chorus, delay and reverb.",
+  "color": "#FFE3B0",
   "source": {
     "repo": "sfaber02/chompi-poly",
     "asset": "^chompi-poly-.*\\.zip$",

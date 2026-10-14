@@ -7,6 +7,7 @@
   ],
   "folder": "TAPE",
   "summary": "TAPE where changing the pitch keeps the timing, on the keys and in the looper.",
+  "color": "#9CFF00",
   "source": {
     "repo": "ugrossek/CHOMPI",
     "tag": "^tehp-(?P<v>.+)$",

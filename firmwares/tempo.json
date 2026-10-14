@@ -8,6 +8,7 @@
   "folder": "TEMPO",
   "version": "1.0",
   "summary": "Drum machine and sequencer.",
+  "color": "#FF6FAE",
   "source": {
     "repo": "sfaber02/CHOMPI-MULTI-FIRMWARE",
     "tag": "^launcher-v1\\.3$",

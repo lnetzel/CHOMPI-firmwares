@@ -7,6 +7,7 @@
   "slot": 15,
   "version": "1.5",
   "summary": "Shows the SD card as a drive on your computer, so you can copy samples without taking the card out.",
+  "color": "#00D15A",
   "source": {
     "repo": "sfaber02/CHOMPI-MULTI-FIRMWARE",
     "tag": "^launcher-v1\\.3$",

@@ -38,7 +38,7 @@ KEEP = 4  # releases and pre-releases each that a pull request check tries
 CARD_RE = re.compile(r"^[A-Z0-9_-]{1,16}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,31}$")
 REQUIRED = ("title", "card", "author", "summary", "source")
-KNOWN = set(REQUIRED) | {"folder", "slot", "stock", "version", "maintainers", "skip", "prefer", "authorUrl", "about"}
+KNOWN = set(REQUIRED) | {"folder", "color", "slot", "stock", "version", "maintainers", "skip", "prefer", "authorUrl", "about"}
 SOURCE_KNOWN = {"repo", "tag", "asset", "zip"}
 
 
@@ -110,6 +110,8 @@ def entry_problems(eid, e, all_entries):
         bad.append("`title`: 24 characters at most")
     if not 10 <= len(e["summary"]) <= 200:
         bad.append("`summary`: one sentence, 10-200 characters")
+    if "color" in e and not re.match(r"^#[0-9A-F]{6}$", str(e["color"])):
+        bad.append("`color`: the key's colour as #RRGGBB, capital letters")
     if "folder" in e and not CARD_RE.match(e["folder"]):
         bad.append("`folder`: the folder name on the card, 1-16 of A-Z 0-9 _ -")
     if "slot" in e and not (e.get("stock") and isinstance(e["slot"], int) and 1 <= e["slot"] <= 15):
@@ -428,7 +430,7 @@ def cmd_build(args):
             "sha256": cur["sha256"],
             "checked": bool(e.get("maintainers") or e.get("stock")),
         }
-        for k in ("folder", "slot"):
+        for k in ("folder", "slot", "color"):
             if k in e:
                 f[k] = e[k]
         prev = [{"version": r["version"], "size": r["size"], "sha256": r["sha256"]}

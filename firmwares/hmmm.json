@@ -7,6 +7,7 @@
   ],
   "folder": "HMMM",
   "summary": "A drone machine inspired by the SOMA Lyra-8: eight voices that frequency-modulate each other, a delay that sings by itself, and fuzz.",
+  "color": "#A8D8FF",
   "source": {
     "repo": "sfaber02/chompi-hmmm",
     "asset": "^HMMM.*\\.bin$"

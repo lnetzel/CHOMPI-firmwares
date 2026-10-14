@@ -8,6 +8,7 @@
   "folder": "WAVE",
   "version": "1.0",
   "summary": "Wavetable synthesizer.",
+  "color": "#2F6BFF",
   "source": {
     "repo": "sfaber02/CHOMPI-MULTI-FIRMWARE",
     "tag": "^launcher-v1\\.3$",

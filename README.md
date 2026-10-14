@@ -42,6 +42,7 @@ each one is a CHOMPI firmware. Once the entry is merged, it's on the page.
 | `author` | Your name as people know it. |
 | `summary` | One sentence: what it does. |
 | `folder` | Optional: the folder on the card your firmware keeps its files in. The page warns when two firmwares share one. |
+| `color` | Optional: your firmware's colour, `#RRGGBB`. The page shows it, and CHOMPI's key breathes in it (launcher 1.6 and newer). Pick one that is easy to tell apart from the others on the LEDs. Without it, the page gives your firmware a spare one. |
 | `maintainers` | GitHub logins who may change this entry. |
 | `source.repo` | Where your releases are. |
 | `source.tag` | Optional: a regular expression the release tag must match. Useful when one repo releases several firmwares. |

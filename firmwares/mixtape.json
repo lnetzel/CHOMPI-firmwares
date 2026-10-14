@@ -3,6 +3,7 @@
   "card": "MIXTAPE",
   "author": "Nils",
   "summary": "TAPE with undo, loop halving and doubling, a recording threshold, MIDI clock sync and a metronome.",
+  "color": "#FFD600",
   "folder": "MIXTAPE",
   "maintainers": ["lost-tty"],
   "source": {

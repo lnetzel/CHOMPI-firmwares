@@ -6,6 +6,7 @@
     "ugrossek"
   ],
   "summary": "An instrument led by your voice: press keys and sing, CHOMPI plays the keys' notes with your voice.",
+  "color": "#E62EE6",
   "source": {
     "repo": "ugrossek/CHOMPI",
     "tag": "^sing-(?P<v>beta.*)$",

@@ -53,6 +53,9 @@ Fill in `firmwares/<id>.json`. `<id>` is lower case, digits and `-`, e.g.
 - `folder`: the folder on the SD card the firmware reads or writes, if any.
   Find it in the source (look for paths passed to `f_open`, `f_opendir`,
   `f_mkdir` and similar). Leave the field out if it uses none.
+- `color`: optional, `#RRGGBB`, the colour of the firmware's key. Leave it
+  out unless the author asks for one; the list's maintainer picks colours
+  that are easy to tell apart on the LEDs.
 - `maintainers`: the author's GitHub login, plus anyone else who may change
   the entry.
 - `source.repo`: `owner/name`.
