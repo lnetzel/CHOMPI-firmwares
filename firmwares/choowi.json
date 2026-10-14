@@ -1,0 +1,14 @@
+{
+  "title": "Choowi",
+  "card": "CHOOWI",
+  "author": "DeeCee",
+  "authorUrl": "https://myth-world.github.io/Forge/",
+  "summary": "A playable synth, sampler and looper that plays chords for you: harmony, arp, effects, Dream mode and sounds you describe to a chatbot (its sample pack is a separate download).",
+  "folder": "FORGE",
+  "maintainers": ["myth-world"],
+  "source": {
+    "repo": "myth-world/Forge",
+    "tag": "^choowi-(?P<v>.+)$",
+    "asset": "^FORGE\\.bin$"
+  }
+}
