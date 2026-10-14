@@ -53,6 +53,19 @@
       "sha256": "3f638466de3b3531976d1c487d69640f24720eb2c487b0c9f9edb0393bdae3d2"
     },
     {
+      "tag": "v0.2.0",
+      "version": "0.2.0",
+      "prerelease": false,
+      "published": "2026-10-09T16:06:59Z",
+      "url": "https://github.com/theotherson/chompi-x0x/releases/tag/v0.2.0",
+      "asset": "chompi-x0x-v0_2_0.bin",
+      "asset_id": 625462732,
+      "asset_updated": "2026-10-09T16:06:52Z",
+      "download": "https://github.com/theotherson/chompi-x0x/releases/download/v0.2.0/chompi-x0x-v0_2_0.bin",
+      "size": 270172,
+      "sha256": "28024394c47b0e3ea7e5b7b2e3e5b22ee125aacd0185b511a26da52892d904f0"
+    },
+    {
       "tag": "v0.1.0",
       "version": "0.1.0",
       "prerelease": true,
