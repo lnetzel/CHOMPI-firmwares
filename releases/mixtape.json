@@ -1,6 +1,45 @@
 {
   "versions": [
     {
+      "tag": "mixtape-20261015-94a46d1",
+      "version": "20261015-94a46d1",
+      "prerelease": false,
+      "published": "2026-10-15T09:50:23Z",
+      "url": "https://github.com/lost-tty/CHOMPI/releases/tag/mixtape-20261015-94a46d1",
+      "asset": "CHOMPI_MIXTAPE_94a46d1.bin",
+      "asset_id": 643414638,
+      "asset_updated": "2026-10-15T09:50:22Z",
+      "download": "https://github.com/lost-tty/CHOMPI/releases/download/mixtape-20261015-94a46d1/CHOMPI_MIXTAPE_94a46d1.bin",
+      "size": 246460,
+      "sha256": "59c09bae22a4e949ba3d19ad4ec965c20f92402f1a77b71371c3b79cd8fc925f"
+    },
+    {
+      "tag": "mixtape-20261015-de43432",
+      "version": "20261015-de43432",
+      "prerelease": false,
+      "published": "2026-10-15T09:43:18Z",
+      "url": "https://github.com/lost-tty/CHOMPI/releases/tag/mixtape-20261015-de43432",
+      "asset": "CHOMPI_MIXTAPE_de43432.bin",
+      "asset_id": 643400234,
+      "asset_updated": "2026-10-15T09:43:18Z",
+      "download": "https://github.com/lost-tty/CHOMPI/releases/download/mixtape-20261015-de43432/CHOMPI_MIXTAPE_de43432.bin",
+      "size": 246460,
+      "sha256": "59c09bae22a4e949ba3d19ad4ec965c20f92402f1a77b71371c3b79cd8fc925f"
+    },
+    {
+      "tag": "mixtape-20261015-8bd1ba4",
+      "version": "20261015-8bd1ba4",
+      "prerelease": false,
+      "published": "2026-10-15T09:27:35Z",
+      "url": "https://github.com/lost-tty/CHOMPI/releases/tag/mixtape-20261015-8bd1ba4",
+      "asset": "CHOMPI_MIXTAPE_8bd1ba4.bin",
+      "asset_id": 643364694,
+      "asset_updated": "2026-10-15T09:27:34Z",
+      "download": "https://github.com/lost-tty/CHOMPI/releases/download/mixtape-20261015-8bd1ba4/CHOMPI_MIXTAPE_8bd1ba4.bin",
+      "size": 246460,
+      "sha256": "59c09bae22a4e949ba3d19ad4ec965c20f92402f1a77b71371c3b79cd8fc925f"
+    },
+    {
       "tag": "mixtape-20261013-279f8cf",
       "version": "20261013-279f8cf",
       "prerelease": false,
