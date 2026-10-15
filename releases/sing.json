@@ -1,6 +1,19 @@
 {
   "versions": [
     {
+      "tag": "sing-beta-3",
+      "version": "beta-3",
+      "prerelease": true,
+      "published": "2026-10-15T22:13:48Z",
+      "url": "https://github.com/ugrossek/CHOMPI/releases/tag/sing-beta-3",
+      "asset": "CHOMPI_SING_beta_3.bin",
+      "asset_id": 645330136,
+      "asset_updated": "2026-10-15T22:13:47Z",
+      "download": "https://github.com/ugrossek/CHOMPI/releases/download/sing-beta-3/CHOMPI_SING_beta_3.bin",
+      "size": 183724,
+      "sha256": "0145b9aff91e26d594d86bd52621107503fecf83b2e92099b5036aac4e791e7c"
+    },
+    {
       "tag": "sing-beta-2",
       "version": "beta-2",
       "prerelease": true,
