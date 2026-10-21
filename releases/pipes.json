@@ -1,0 +1,17 @@
+{
+  "versions": [
+    {
+      "tag": "v1.0.0",
+      "version": "1.0",
+      "prerelease": false,
+      "published": "2026-10-21T13:06:04Z",
+      "url": "https://github.com/lnetzel/CHOMPI-Pipes/releases/tag/v1.0.0",
+      "asset": "CHOMPI_PIPES_1.0.bin",
+      "asset_id": 662537474,
+      "asset_updated": "2026-10-21T13:05:27Z",
+      "download": "https://github.com/lnetzel/CHOMPI-Pipes/releases/download/v1.0.0/CHOMPI_PIPES_1.0.bin",
+      "size": 190800,
+      "sha256": "6e6b9166056c8cb164378bb72b71efcd5ba845f709b3301eeee392f63b6ef939"
+    }
+  ]
+}
