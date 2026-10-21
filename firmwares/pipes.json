@@ -1,0 +1,16 @@
+{
+  "title": "PIPES",
+  "card": "PIPES",
+  "author": "lnetzel",
+  "authorUrl": "https://github.com/lnetzel",
+  "summary": "A six voice organ emulator",
+  "color": "#FF2D2D",
+  "folder": "PIPES",
+  "maintainers": ["lnetzel"],
+  "prefer": "newest",
+  "source": {    
+     "repo": "lnetzel/CHOMPI-pipes",
+    "tag": "^v(?P<v>\\d.*)$",
+    "asset": "^CHOMPI_pipes_.*\\.bin$"
+  }
+}
