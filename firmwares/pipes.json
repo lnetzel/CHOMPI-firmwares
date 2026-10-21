@@ -9,7 +9,7 @@
   "maintainers": ["lnetzel"],
   "prefer": "newest",
   "source": {    
-     "repo": "lnetzel/CHOMPI-pipes",
+     "repo": "lnetzel/CHOMPI-Pipes",
     "tag": "^v(?P<v>\\d.*)$",
     "asset": "^CHOMPI_Pipes_.*\\.bin$"
   }
