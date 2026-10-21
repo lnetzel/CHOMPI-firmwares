@@ -11,6 +11,6 @@
   "source": {    
      "repo": "lnetzel/CHOMPI-pipes",
     "tag": "^v(?P<v>\\d.*)$",
-    "asset": "^CHOMPI_pipes_.*\\.bin$"
+    "asset": "^CHOMPI_Pipes_.*\\.bin$"
   }
 }
