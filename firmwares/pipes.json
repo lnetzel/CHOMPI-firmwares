@@ -1,0 +1,12 @@
+{
+  "title": "PIPES",
+  "card": "PIPES",
+  "author": "lnetzel",
+  "summary": "A six-voice organ with four pipe ranks, expressive tone shaping, modulation, effects, presets, and live recording.",
+  "folder": "PIPES",
+  "maintainers": ["lnetzel"],
+  "source": {
+    "repo": "lnetzel/CHOMPI-Pipes",
+    "asset": "^CHOMPI_PIPES_(?P<v>[\\d.]+)\\.bin$"
+  }
+}
