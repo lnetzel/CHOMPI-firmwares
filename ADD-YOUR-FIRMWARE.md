@@ -59,6 +59,9 @@ Fill in `firmwares/<id>.json`. `<id>` is lower case, digits and `-`, e.g.
 - `maintainers`: the author's GitHub login, plus anyone else who may change
   the entry.
 - `source.repo`: `owner/name`.
+- Not released on GitHub? Then `source.index` instead of `repo`, `tag` and
+  `asset`: a link to a version index on the author's site, see "Not on
+  GitHub" in the README for its format. Also set `authorUrl`.
 - `source.asset`: a regular expression matching the release file. It must
   match the file in **future** releases too, so allow for a version in the
   name if the author puts one there (`^chompi-x0x-.*\\.bin$`).

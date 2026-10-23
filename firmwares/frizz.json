@@ -8,9 +8,8 @@
   "folder": "FRIZZ",
   "summary": "A stereo effects box and looper for whatever you plug into AUX: twelve punch-in effects on the keys, FX scenes and MIDI-synced loops.",
   "color": "#8A4DFF",
+  "authorUrl": "https://pumpwerker.de/frizz/",
   "source": {
-    "repo": "ZUHcYa/FrizZ",
-    "tag": "^v(?P<v>[0-9]+(\\.[0-9]+)+)$",
-    "asset": "^FRIZZ\\.bin$"
+    "index": "https://pumpwerker.de/frizz/versions.json"
   }
 }

@@ -45,6 +45,8 @@ each one is a CHOMPI firmware. Once the entry is merged, it's on the page.
 | `color` | Optional: your firmware's colour, `#RRGGBB`. The page shows it, and CHOMPI's key breathes in it (launcher 1.6 and newer). Pick one that is easy to tell apart from the others on the LEDs. Without it, the page gives your firmware a spare one. |
 | `maintainers` | GitHub logins who may change this entry. |
 | `source.repo` | Where your releases are. |
+| `source.index` | Instead of `repo`, for firmwares not released on GitHub: a link to a version index on your site (below). Needs `authorUrl`. |
+| `authorUrl` | Optional: the link behind your name. Default: your GitHub profile. |
 | `source.tag` | Optional: a regular expression the release tag must match. Useful when one repo releases several firmwares. |
 | `source.asset` | A regular expression for the file in the release. |
 | `source.zip` | If the asset is a zip: a regular expression for the `.bin` inside it. |
@@ -53,6 +55,36 @@ each one is a CHOMPI firmware. Once the entry is merged, it's on the page.
 
 The version shown is the `(?P<v>…)` group from `asset` or `tag`, or else the
 tag itself.
+
+### Not on GitHub: a version index
+
+If your builds live on your own site, point `source.index` at a JSON file
+there, newest version first or in any order:
+
+```json
+{
+  "changelog": "https://example.org/myfw/changelog/",
+  "versions": [
+    { "version": "1.0.1", "date": "2026-10-13",
+      "file": "https://example.org/myfw/download/1.0.1/MYFW.bin",
+      "notes": "https://example.org/myfw/changelog/#1.0.1",
+      "prerelease": false }
+  ]
+}
+```
+
+`version`, `date` (YYYY-MM-DD) and `file` are needed; `notes` (else
+`changelog`) is the page's link for that version; `prerelease` defaults to
+false. A new version is a new line in the index. Give each version its own
+link that stays: the list keeps copies, but it checks every file again when
+the server reports it changed (ETag or Last-Modified). No CORS headers or
+checksums are needed, because the browser fetches the copies on this list's
+site. `skip` takes versions here. The entry itself is still changed by pull
+request from a `maintainers` login.
+
+A firmware that moves from GitHub to an index keeps its history: a version in
+the index with the same number and the same file is the same version, so
+cards with older ones are still offered the update.
 
 ### What is checked
 
@@ -66,10 +98,10 @@ firmware and links to its release notes.
 
 ## How it works
 
-`tools/firmwares.py poll` runs every hour (`.github/workflows/publish.yml`),
+`tools/firmwares.py poll` runs every 15 minutes (`.github/workflows/publish.yml`),
 records new releases in `releases/` and publishes the site: `catalog.json` and
 copies of the `.bin` files, which the browser can't fetch from GitHub
-directly. New releases are posted to the issue labelled `release-log`.
+(or an author's site) directly. New releases are posted to the issue labelled `release-log`.
 
 To take a release down: add its tag to the entry's `skip`, or revert the
 commit that recorded it.

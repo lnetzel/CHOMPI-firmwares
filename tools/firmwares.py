@@ -7,9 +7,10 @@
 
 Each firmware has an entry in firmwares/<id>.json, written by its developer
 and approved once. New versions come from the GitHub releases of the repo the
-entry names; poll finds them, checks that the file is a CHOMPI firmware and
-records its size and checksum in releases/<id>.json. build then copies the
-files onto the site, because the browser may not fetch them from GitHub.
+entry names, or from a version index on the developer's own site (see
+index_releases); poll finds them, checks that the file is a CHOMPI firmware
+and records its size and checksum in releases/<id>.json. build then copies
+the files onto the site, because the browser may not fetch them from there.
 
 Standard library only. Set GITHUB_TOKEN (or have `gh` logged in).
 """
@@ -39,7 +40,8 @@ CARD_RE = re.compile(r"^[A-Z0-9_-]{1,16}$")
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,31}$")
 REQUIRED = ("title", "card", "author", "summary", "source")
 KNOWN = set(REQUIRED) | {"folder", "color", "slot", "stock", "version", "maintainers", "skip", "prefer", "authorUrl", "about"}
-SOURCE_KNOWN = {"repo", "tag", "asset", "zip"}
+SOURCE_KNOWN = {"repo", "index", "tag", "asset", "zip"}
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2})?Z?)?$")
 
 
 # ---- GitHub -----------------------------------------------------------------
@@ -77,6 +79,83 @@ def releases_of(repo):
     rel = [r for r in rel if not r.get("draft")]
     rel.sort(key=lambda r: r.get("published_at") or "", reverse=True)
     return rel
+
+
+# ---- version index (firmwares not released on GitHub) -----------------------
+
+def index_releases(url):
+    """A version index on the developer's site, as GitHub-shaped releases,
+    newest first, so everything after this treats both sources alike:
+
+        { "changelog": "https://...",            (optional)
+          "versions": [ { "version": "1.0.1", "date": "2026-10-13",
+                          "file": "https://.../1.0.1/FRIZZ.bin",
+                          "notes": "https://...", (optional)
+                          "prerelease": false } ] } (optional)
+
+    The file's ETag / Last-Modified stands in for GitHub's asset id, so a file
+    replaced under the same link is noticed. Returns (releases, problems)."""
+    data = json.loads(http(url, accept="application/json"))
+    rels, bad = [], []
+    for i, v in enumerate(data.get("versions", []) if isinstance(data, dict) else []):
+        p = index_version_problem(v)
+        if p:
+            bad.append(f"version {i + 1} in the index: {p}")
+            continue
+        date = v["date"] if "T" in v["date"] else v["date"] + "T00:00:00Z"
+        rels.append({
+            "tag_name": v["version"],
+            "prerelease": bool(v.get("prerelease")),
+            "published_at": date if date.endswith("Z") else date + "Z",
+            "html_url": v.get("notes") or data.get("changelog") or url,
+            "assets": [{
+                "name": v["file"].rsplit("/", 1)[-1],
+                "id": v["file"],
+                "updated_at": file_stamp(v["file"]),
+                "browser_download_url": v["file"],
+            }],
+        })
+    if not isinstance(data, dict) or not isinstance(data.get("versions"), list):
+        bad.append("the index has no `versions` list")
+    rels.sort(key=lambda r: r["published_at"], reverse=True)
+    return rels, bad
+
+
+def index_version_problem(v):
+    if not isinstance(v, dict):
+        return "not an object"
+    if not isinstance(v.get("version"), str) or not re.match(r"^[\w.+-]{1,32}$", v["version"]):
+        return "`version`: 1-32 of letters, digits . + - _"
+    if not isinstance(v.get("date"), str) or not DATE_RE.match(v["date"]):
+        return "`date`: YYYY-MM-DD"
+    if not isinstance(v.get("file"), str) or not v["file"].startswith("https://"):
+        return "`file`: an https:// link to the .bin"
+    if "notes" in v and not (isinstance(v["notes"], str) and v["notes"].startswith("https://")):
+        return "`notes`: an https:// link"
+    return None
+
+
+def file_stamp(url):
+    """ETag or Last-Modified of a file, '' if the server gives neither."""
+    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "chompi-firmwares"})
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            return r.headers.get("ETag") or r.headers.get("Last-Modified") or ""
+    except urllib.error.URLError:
+        return ""
+
+
+def source_releases(e):
+    """(releases, problems) for an entry, from GitHub or its index."""
+    s = e["source"]
+    if "index" in s:
+        return index_releases(s["index"])
+    return releases_of(s["repo"]), []
+
+
+def source_name(e):
+    s = e["source"]
+    return s.get("repo") or s["index"]
 
 
 # ---- entries ----------------------------------------------------------------
@@ -124,15 +203,24 @@ def entry_problems(eid, e, all_entries):
     for k in s:
         if k not in SOURCE_KNOWN:
             bad.append(f"unknown field `source.{k}`")
-    if not re.match(r"^[\w.-]+/[\w.-]+$", s.get("repo", "")):
+    if ("repo" in s) == ("index" in s):
+        bad.append("`source`: either `repo` (GitHub releases) or `index` (a version index), not both")
+    elif "repo" in s and not re.match(r"^[\w.-]+/[\w.-]+$", s["repo"]):
         bad.append("`source.repo`: owner/name of a GitHub repository")
+    elif "index" in s:
+        if not str(s["index"]).startswith("https://"):
+            bad.append("`source.index`: an https:// link to the version index")
+        if not str(e.get("authorUrl", "")).startswith("https://"):
+            bad.append("`authorUrl` is needed with `source.index` (there is no GitHub owner to link to)")
+        if not e.get("maintainers"):
+            bad.append("`maintainers` is needed with `source.index`: the GitHub logins that may change the entry")
     for k in ("tag", "asset", "zip"):
         if k in s:
             try:
                 re.compile(s[k])
             except re.error as err:
                 bad.append(f"`source.{k}` is not a valid regular expression: {err}")
-    if "asset" not in s:
+    if "repo" in s and "asset" not in s:
         bad.append("`source.asset` is missing")
     return bad
 
@@ -185,7 +273,7 @@ def version_of(entry, release, asset_name):
     if entry.get("version"):
         return entry["version"]
     s = entry["source"]
-    for pattern, text in ((s["asset"], asset_name), (s.get("tag", ""), release["tag_name"])):
+    for pattern, text in ((s.get("asset", ""), asset_name), (s.get("tag", ""), release["tag_name"])):
         m = re.search(pattern, text)
         if m and "v" in m.groupdict() and m.group("v"):
             return m.group("v")
@@ -201,7 +289,7 @@ def candidates(entry, rels):
             continue
         if r["tag_name"] in skip:
             continue
-        assets = [a for a in r.get("assets", []) if re.search(s["asset"], a["name"])]
+        assets = [a for a in r.get("assets", []) if re.search(s.get("asset", ""), a["name"])]
         if assets:
             yield r, assets[0]
 
@@ -236,9 +324,17 @@ def poll_entry(eid, e, rels, write=True):
     for download again."""
     report = []
     old = {v["tag"]: v for v in load_releases(eid)}
-    new = []
+    new, used = [], set()
     for r, a in candidates(e, rels):
         known = old.get(r["tag_name"])
+        if not known:
+            # the firmware moved (GitHub tag v1.0.1 -> index version 1.0.1):
+            # the same version is the same record, not a new release
+            v = version_of(e, r, a["name"])
+            known = next((o for t, o in old.items() if o["version"] == v and t not in used
+                          and not any(n["tag"] == t for n in new)), None)
+        if known:
+            used.add(known["tag"])
         if known and known.get("asset_id") == a["id"] and known.get("asset_updated") == a["updated_at"]:
             known = dict(known, prerelease=r["prerelease"])  # may be flipped later on GitHub
             known.pop("gone", None)
@@ -261,6 +357,14 @@ def poll_entry(eid, e, rels, write=True):
             why = image_problem(data)
         except (ValueError, zipfile.BadZipFile, urllib.error.URLError) as err:
             why = str(err)
+        if not why and known and known.get("sha256") == hashlib.sha256(data).hexdigest():
+            # same file: a new link or time stamp only. Keep the record (and
+            # its publish date), say so only if it moved
+            if known.get("download") != rec["download"]:
+                report.append(f"- {e['title']} {known['version']}: same file, now from {rec['download']}")
+            rec.update(published=known["published"], size=known["size"], sha256=known["sha256"])
+            new.append(rec)
+            continue
         if why:
             rec["rejected"] = why
             report.append(f"- **{e['title']} {rec['version']}** ({what}): not taken, {why}. [release]({rec['url']})")
@@ -270,13 +374,13 @@ def poll_entry(eid, e, rels, write=True):
             pre = " (pre-release)" if r["prerelease"] else ""
             report.append(f"- {e['title']} {rec['version']}{pre}: {what}, {len(data) // 1024} KB. [release]({rec['url']})")
         new.append(rec)
-    seen = {v["tag"] for v in new}
+    seen = {v["tag"] for v in new} | used
     for t, v in old.items():
         if t in seen:
             continue
         if not v.get("gone"):
             v = dict(v, gone=True)
-            report.append(f"- {e['title']} {v['version']}: no longer on GitHub (or skipped); "
+            report.append(f"- {e['title']} {v['version']}: no longer released (or skipped); "
                           "not offered any more, still recognised on cards")
         new.append(v)
     new.sort(key=lambda v: v["published"], reverse=True)
@@ -294,12 +398,17 @@ def cmd_poll(args):
         if entry_problems(eid, e, entries):
             failed.append(f"- `{eid}`: entry is invalid, skipped (run `check`)")
             continue
-        repo = e["source"]["repo"]
+        name = source_name(e)
         try:
-            rels = by_repo[repo] if repo in by_repo else by_repo.setdefault(repo, releases_of(repo))
-        except urllib.error.URLError as err:
-            failed.append(f"- {e['title']}: couldn't read the releases of {repo}: {err}")
+            if name not in by_repo:
+                by_repo[name] = source_releases(e)
+            rels, bad = by_repo[name]
+        except (urllib.error.URLError, ValueError) as err:
+            failed.append(f"- {e['title']}: couldn't read the releases of {name}: {err}")
             continue
+        failed += [f"- {e['title']}: {b}" for b in bad]
+        if not rels and bad:
+            continue  # a broken index must not mark every version gone
         report += poll_entry(eid, e, rels)
     text = "\n".join(report + failed)
     if args.report:
@@ -325,8 +434,8 @@ def cmd_check(args):
             errors += len(bad)
             out += [f"- :x: {b}" for b in bad]
             continue
-        repo = e["source"]["repo"]
-        owner = repo.split("/")[0].lower()
+        repo = source_name(e)
+        owner = e["source"]["repo"].split("/")[0].lower() if "repo" in e["source"] else None
         maint = [m.lower() for m in e.get("maintainers", [])]
         if pr_author:
             if pr_author == owner or pr_author in maint:
@@ -334,15 +443,17 @@ def cmd_check(args):
             else:
                 out.append(f"- :warning: opened by @{args.author}, who neither owns `{repo}` nor is listed in `maintainers`")
         try:
-            rels = releases_of(repo)
-        except urllib.error.URLError as err:
+            rels, bad = source_releases(e)
+        except (urllib.error.URLError, ValueError) as err:
             errors += 1
             out.append(f"- :x: can't read the releases of `{repo}`: {err}")
             continue
+        errors += len(bad)
+        out += [f"- :x: {b}" for b in bad]
         found = list(kept(e, rels))
         if not found:
             errors += 1
-            out.append(f"- :x: no release of `{repo}` matches `source` (tag `{e['source'].get('tag', 'any')}`, asset `{e['source']['asset']}`)")
+            out.append(f"- :x: no release of `{repo}` matches `source` (tag `{e['source'].get('tag', 'any')}`, asset `{e['source'].get('asset', 'any')}`)")
             continue
         out.append("- releases it would take:")
         for r, a in found:
@@ -413,7 +524,7 @@ def cmd_build(args):
         rel = f"bin/{eid}/{safe(e['card'])}-{safe(cur['version'])}.bin"
         (out / rel).parent.mkdir(parents=True, exist_ok=True)
         (out / rel).write_bytes(data)
-        owner = e["source"]["repo"].split("/")[0]
+        owner = e["source"].get("repo", "").split("/")[0]
         f = {
             "id": eid,
             "title": e["title"],
@@ -442,7 +553,7 @@ def cmd_build(args):
     firmwares.sort(key=lambda f: f["released"], reverse=True)
     firmwares.sort(key=lambda f: (f["stage"] != "stock", f.get("slot", 99)))
     catalog = {
-        "about": "Firmwares the CHOMPI setup page offers. Built from firmwares/*.json and their GitHub releases "
+        "about": "Firmwares the CHOMPI setup page offers. Built from firmwares/*.json and their releases "
                  "by tools/firmwares.py. 'checked': the author maintains the entry. 'previous': earlier versions, "
                  "so the page recognises them on a card.",
         "firmwares": firmwares,
